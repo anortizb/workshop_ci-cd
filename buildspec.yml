@@ -1,14 +1,15 @@
 version: 0.2
-
 phases:
+  install:
+    commands:
+      - yarn install
   build:
     commands:
-      - sam build
-
+      - yarn build
   post_build:
     commands:
-      - sam package --s3-bucket $S3_BUCKET --output-template-file package.yml
-
+      - aws cloudformation package --template template.yml --s3-bucket deployment-artifacts-andresortiz --output-template package.yml
 artifacts:
   files:
     - package.yml
+  discard-paths: yes
